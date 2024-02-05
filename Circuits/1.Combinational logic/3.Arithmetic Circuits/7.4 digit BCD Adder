@@ -1,0 +1,26 @@
+module top_module ( 
+    input [15:0] a, b,
+    input cin,
+    output cout,
+    output [15:0] sum );
+
+    wire x,y,z;
+    bcd_add ga1(x,sum[3:0],a[3:0],b[3:0],cin);
+    bcd_add ga2(y,sum[7:4],a[7:4],b[7:4],x);
+    bcd_add ga3(z,sum[11:8],a[11:8],b[11:8],y);
+    bcd_add ga4(cout,sum[15:12],a[15:12],b[15:12],z);
+endmodule
+
+module bcd_add(cout,sum,a,b,cin);
+    input [3:0] a;
+    input [3:0] b;
+    input     cin;
+    output   cout;
+    output  [3:0] sum ;
+    wire [3:0]w,x;
+    wire y,z;
+    assign {w,x}=a+b+cin;  //sum of a,b,cin
+    assign y=( w|(x[3]&x[2])|(x[3]&x[1]) );
+    assign sum={1'b0,{2{y}},1'b0}+x;  // conversion of invalid bcd number to bcd
+    assign cout=y;
+endmodule

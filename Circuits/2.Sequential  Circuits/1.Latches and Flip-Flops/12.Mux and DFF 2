@@ -1,0 +1,36 @@
+module top_module (
+    input clk,
+    input w, R, E, L,
+    output reg Q
+);
+    
+    wire x,y,z;
+    assign x=Q;
+    assign y=E?w:x;
+    assign z=L?R:y;
+    
+    always@(posedge clk)
+        begin
+            Q<=z;
+        end
+
+endmodule
+
+module dff_with_mux(Q,clk,w,R,E,L ); //Instantiation of mux with dff
+    input clk;
+    input w,E, L;
+    parameter N=4;
+    input [N-1:0]R;
+    inout  [N-1:0]Q;
+    wire [N-1:0]q_in;
+    assign q_in[N-1]=w;
+    
+    genvar i;
+    generate for(i=1;i<=N;i=i+1)
+        begin:block_name
+            top_module ga(Q[N-i],clk,q_in[N-i],R[N-i],E,L);
+     		assign q_in[N-i]=Q[N-i];
+        end
+    endgenerate
+    
+endmodule

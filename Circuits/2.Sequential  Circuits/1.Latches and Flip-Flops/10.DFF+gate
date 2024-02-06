@@ -1,0 +1,15 @@
+module top_module (
+    input clk,
+    input in, 
+    output reg out);
+    
+    wire x,y;
+    assign x=out;
+    assign y=x^in;
+    
+    always@(posedge clk)
+        begin
+            out<=y;
+        end
+   
+endmodule

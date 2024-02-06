@@ -1,0 +1,28 @@
+module top_module (
+	input clk,
+	input L, 
+	input r_in,
+	input q_in,
+	output reg Q);
+    
+    wire x;
+    assign x=L?r_in:q_in;
+    
+    always@(posedge clk)  //design of one mux and dff
+        begin
+            Q<=x;
+        end
+
+endmodule
+
+module practice (Q,clk,L,r0,r1,r2);  //given circuit implementation
+    input clk,L,r0,r1,r2;
+    inout [2:0]Q;
+    
+    wire y;
+    assign y=Q[2] ^ Q[1];
+    top_module ga1(Q[0],clk,L,r0,Q[2]);
+    top_module ga2(Q[1],clk,L,r1,Q[0]);
+    top_module ga3(Q[2],clk,L,r2,y);
+
+endmodule

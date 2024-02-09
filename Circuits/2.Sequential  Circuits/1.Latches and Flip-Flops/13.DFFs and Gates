@@ -1,0 +1,30 @@
+module top_module (
+    input clk,
+    input x,
+    output z
+); 
+    reg s,u,m;
+    wire a,b,c,e,f,g;
+    assign a=s;
+    assign b=a^x;
+    assign c=~u;
+    assign e=c&x;
+    assign f=~m;
+    assign g=f|x;
+    
+    d_ff ga1(.clk(clk),.d(b),.q(s) );
+    d_ff ga2(.clk(clk),.d(e),.q(u) );
+    d_ff ga3(.clk(clk),.d(g),.q(m)  );
+    
+    assign z=~( s | u | m );
+
+endmodule
+
+module d_ff(clk,d,q);
+    input clk,d;
+    output reg q;
+    always@(posedge clk)
+        begin
+            q<=d;
+        end
+endmodule

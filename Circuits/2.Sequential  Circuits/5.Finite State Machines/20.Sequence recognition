@@ -20,19 +20,19 @@ module top_module(
         begin
             case(state)
                 NONE : next = (in) ? ONE   : NONE;
-				ONE	 : next = (in) ? TWO   : NONE;
-				TWO	 : next = (in) ? THREE : NONE;
-				THREE: next = (in) ? FOUR  : NONE;
-				FOUR : next = (in) ? FIVE  : NONE;
+		ONE  : next = (in) ? TWO   : NONE;
+		TWO  : next = (in) ? THREE : NONE;
+		THREE: next = (in) ? FOUR  : NONE;
+		FOUR : next = (in) ? FIVE  : NONE;
                 FIVE : next = (in) ? SIX   : DISCARD;
-                SIX	 : next = (in) ? ERROR : FLAG;
-				DISCARD : next = (in) ? ONE   : NONE;
-				FLAG : next = (in) ? ONE   : NONE;
-                ERROR  : next = (in) ? ERROR: NONE;
+                SIX  : next = (in) ? ERROR : FLAG;
+		DISCARD : next = (in) ? ONE   : NONE;
+		FLAG : next = (in) ? ONE   : NONE;
+                ERROR : next = (in) ? ERROR: NONE;
             endcase
         end
         assign disc=(state==DISCARD);
-    		assign flag=( state==FLAG);
+    	assign flag=( state==FLAG);
         assign err=( state==ERROR);
 
 endmodule

@@ -1,0 +1,29 @@
+module top_module (
+    input [3:0] SW,
+    input [3:0] KEY,
+    output [3:0] LEDR
+); //
+    MUXDFF ga1(.Q(LEDR[3]),.clk(KEY[0]),.E(KEY[1]),.L(KEY[2]),.W(KEY[3]),.R(SW[3]) );
+ 	  MUXDFF ga2(.Q(LEDR[2]),.clk(KEY[0]),.E(KEY[1]),.L(KEY[2]),.W(LEDR[3]),.R(SW[2]) );
+	  MUXDFF ga3(.Q(LEDR[1]),.clk(KEY[0]),.E(KEY[1]),.L(KEY[2]),.W(LEDR[2]),.R(SW[1]) );
+	  MUXDFF ga4(.Q(LEDR[0]),.clk(KEY[0]),.E(KEY[1]),.L(KEY[2]),.W(LEDR[1]),.R(SW[0]) );
+
+endmodule
+
+module MUXDFF (
+    input clk,
+    input W, R, E, L,
+    output reg Q
+);
+    
+    wire x,y,z;
+    assign x=Q;
+    assign y=E?W:x;
+    assign z=L?R:y;
+    
+    always@(posedge clk)
+        begin
+            Q<=z;
+        end
+
+endmodule
